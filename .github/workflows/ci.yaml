@@ -7,7 +7,11 @@ on:
 
 jobs:
   images:
-    permissions: write-all
+    permissions:
+      contents: read
+      packages: write
+      id-token: write # needed for signing the images with GitHub OIDC Token **not production ready**
+
     name: Build images
     runs-on: ubuntu-20.04 # most compatible with debian 11
 
