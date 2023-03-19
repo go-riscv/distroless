@@ -6,7 +6,7 @@ on:
 
 jobs:
   autoformat:
-    name: Auto-format and Check
+    name: format
     runs-on: ubuntu-latest
 
     steps:
