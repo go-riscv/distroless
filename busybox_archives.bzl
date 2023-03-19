@@ -38,6 +38,13 @@ def repositories():
         urls = ["https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-s390x"],
     )
 
+    http_file(
+        name = "busybox_riscv64",
+        executable = True,
+        sha256 = "03fa94a131491c2ff25a48435d6b17adaba160cba77e4f4f3b5df04bb9d186e5",
+        urls = ["https://github.com/go-riscv/busybox/releases/download/1_36_0_riscv64/busybox"],
+    )
+
     # To update ppc64le busybox binary (#723)
     # Get the latest commit hash from dist-ppc64le branch of docker-library repo.
     # Substitute it in the link: https://github.com/docker-library/busybox/raw/<latest-commit-hash>/stable/musl/busybox.tar.xz

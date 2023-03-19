@@ -18,12 +18,13 @@ package deb
 import (
 	"fmt"
 	"io"
-	"net/http"
 	"regexp"
 	"time"
 
-	"github.com/GoogleContainerTools/distroless/debian_package_manager/internal/build/config"
 	"github.com/pkg/errors"
+
+	"github.com/GoogleContainerTools/distroless/debian_package_manager/internal/build/config"
+	"github.com/GoogleContainerTools/distroless/debian_package_manager/internal/rhttp"
 )
 
 func LatestSnapshot() (*config.Snapshots, error) {
@@ -39,9 +40,16 @@ func LatestSnapshot() (*config.Snapshots, error) {
 		return nil, errors.Wrap(err, "calculating latest security snapshot")
 	}
 
+	portsSnapshotURL := "https://snapshot.debian.org/archive/debian-ports/?year=%d&month=%d"
+	sp, err := latest(portsSnapshotURL)
+	if err != nil {
+		return nil, errors.Wrap(err, "calculating latest ports snapshot")
+	}
+
 	return &config.Snapshots{
 		Debian:   s,
 		Security: ss,
+		Ports:    sp,
 	}, nil
 }
 
@@ -55,7 +63,7 @@ var (
 func latest(urltemplate string) (string, error) {
 	year, month, _ := time.Now().Date()
 	snapshotURL := fmt.Sprintf(urltemplate, year, month)
-	resp, err := http.Get(snapshotURL)
+	resp, err := rhttp.Get(snapshotURL)
 	if err != nil {
 		return "", err
 	}
@@ -79,6 +87,20 @@ func Main(snapshot string, arch config.Arch, distro config.Distro) *PackageIndex
 	return &PackageIndex{
 		URL:      fmt.Sprintf("https://snapshot.debian.org/archive/debian/%s/dists/%s/main/binary-%s/Packages.xz", snapshot, distro.Codename(), arch.DebianName()),
 		PoolRoot: fmt.Sprintf("https://snapshot.debian.org/archive/debian/%s/", snapshot),
+		Snapshot: snapshot,
+		Distro:   distro,
+		Arch:     arch,
+		Channel:  "main",
+	}
+}
+
+func Ports(snapshot string, arch config.Arch, distro config.Distro) *PackageIndex {
+	if snapshot == "" {
+		panic("ports snapshot must be specified")
+	}
+	return &PackageIndex{
+		URL:      fmt.Sprintf("https://snapshot.debian.org/archive/debian-ports/%s/dists/%s/main/binary-%s/Packages.xz", snapshot, distro.Codename(), arch.DebianName()),
+		PoolRoot: fmt.Sprintf("https://snapshot.debian.org/archive/debian-ports/%s/", snapshot),
 		Snapshot: snapshot,
 		Distro:   distro,
 		Arch:     arch,
