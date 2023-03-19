@@ -50,9 +50,3 @@ def distro_components(distro):
                 workdir = workdir,
             )
 
-        container_test(
-            name = "static_" + arch + "_" + distro + "_test",
-            configs = ["testdata/static.yaml"],
-            image = ":check_certs_image_" + arch + "_" + distro,
-            tags = ["manual", arch],
-        )

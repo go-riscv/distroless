@@ -25,57 +25,9 @@ docker_manifest() {
   docker manifest push $_image
 }
 
-for distro_suffix in "" -debian11; do
-  docker_manifest gcr.io/$PROJECT_ID/static${distro_suffix}:nonroot "amd64 arm arm64 s390x ppc64le"
-  docker_manifest gcr.io/$PROJECT_ID/static${distro_suffix}:latest "amd64 arm arm64 s390x ppc64le"
-  docker_manifest gcr.io/$PROJECT_ID/static${distro_suffix}:debug-nonroot "amd64 arm arm64 s390x ppc64le"
-  docker_manifest gcr.io/$PROJECT_ID/static${distro_suffix}:debug "amd64 arm arm64 s390x ppc64le"
-
-  docker_manifest gcr.io/$PROJECT_ID/base${distro_suffix}:nonroot "amd64 arm arm64 s390x ppc64le"
-  docker_manifest gcr.io/$PROJECT_ID/base${distro_suffix}:latest "amd64 arm arm64 s390x ppc64le"
-  docker_manifest gcr.io/$PROJECT_ID/base${distro_suffix}:debug-nonroot "amd64 arm arm64 s390x ppc64le"
-  docker_manifest gcr.io/$PROJECT_ID/base${distro_suffix}:debug "amd64 arm arm64 s390x ppc64le"
-
-  docker_manifest gcr.io/$PROJECT_ID/base-nossl${distro_suffix}:nonroot "amd64 arm arm64 s390x ppc64le"
-  docker_manifest gcr.io/$PROJECT_ID/base-nossl${distro_suffix}:latest "amd64 arm arm64 s390x ppc64le"
-  docker_manifest gcr.io/$PROJECT_ID/base-nossl${distro_suffix}:debug-nonroot "amd64 arm arm64 s390x ppc64le"
-  docker_manifest gcr.io/$PROJECT_ID/base-nossl${distro_suffix}:debug "amd64 arm arm64 s390x ppc64le"
-
-  docker_manifest gcr.io/$PROJECT_ID/cc${distro_suffix}:nonroot "amd64 arm arm64 s390x ppc64le"
-  docker_manifest gcr.io/$PROJECT_ID/cc${distro_suffix}:latest "amd64 arm arm64 s390x ppc64le"
-  docker_manifest gcr.io/$PROJECT_ID/cc${distro_suffix}:debug-nonroot "amd64 arm arm64 s390x ppc64le"
-  docker_manifest gcr.io/$PROJECT_ID/cc${distro_suffix}:debug "amd64 arm arm64 s390x ppc64le"
-done
-
-for distro_suffix in "" -debian11; do
-  docker_manifest gcr.io/$PROJECT_ID/python3${distro_suffix}:nonroot "amd64 arm64"
-  docker_manifest gcr.io/$PROJECT_ID/python3${distro_suffix}:latest "amd64 arm64"
-  docker_manifest gcr.io/$PROJECT_ID/python3${distro_suffix}:debug-nonroot "amd64 arm64"
-  docker_manifest gcr.io/$PROJECT_ID/python3${distro_suffix}:debug "amd64 arm64"
-done
-
-for java_version in -base 11 17; do
-  docker_manifest gcr.io/$PROJECT_ID/java${java_version}-debian11:latest "amd64 arm64 s390x ppc64le"
-  docker_manifest gcr.io/$PROJECT_ID/java${java_version}-debian11:nonroot "amd64 arm64 s390x ppc64le"
-  docker_manifest gcr.io/$PROJECT_ID/java${java_version}-debian11:debug "amd64 arm64 s390x ppc64le"
-  docker_manifest gcr.io/$PROJECT_ID/java${java_version}-debian11:debug-nonroot "amd64 arm64 s390x ppc64le"
-done
-
-# these are existing legacy tags that are scheduled to be removed
-for distro_suffix in "" -debian11; do
-  docker_manifest gcr.io/$PROJECT_ID/nodejs${distro_suffix}:latest "amd64 arm64"
-  docker_manifest gcr.io/$PROJECT_ID/nodejs${distro_suffix}:debug "amd64 arm64"
-  docker_manifest gcr.io/$PROJECT_ID/nodejs${distro_suffix}:18 "amd64 arm64"
-  docker_manifest gcr.io/$PROJECT_ID/nodejs${distro_suffix}:18-debug "amd64 arm64"
-  docker_manifest gcr.io/$PROJECT_ID/nodejs${distro_suffix}:16 "amd64 arm64"
-  docker_manifest gcr.io/$PROJECT_ID/nodejs${distro_suffix}:16-debug "amd64 arm64"
-done
-
-for distro_suffix in "" -debian11; do
-  for node_version in 14 16 18; do
-    docker_manifest gcr.io/$PROJECT_ID/nodejs${node_version}${distro_suffix}:latest "amd64 arm64"
-    docker_manifest gcr.io/$PROJECT_ID/nodejs${node_version}${distro_suffix}:nonroot "amd64 arm64"
-    docker_manifest gcr.io/$PROJECT_ID/nodejs${node_version}${distro_suffix}:debug "amd64 arm64"
-    docker_manifest gcr.io/$PROJECT_ID/nodejs${node_version}${distro_suffix}:debug-nonroot "amd64 arm64"
-  done
+for distro_suffix in "" -unstable; do
+  docker_manifest ghcr.io/go-riscv/distroless/static${distro_suffix}:nonroot "riscv64"
+  docker_manifest ghcr.io/go-riscv/distroless/static${distro_suffix}:latest "riscv64"
+  docker_manifest ghcr.io/go-riscv/distroless/static${distro_suffix}:debug-nonroot "riscv64"
+  docker_manifest ghcr.io/go-riscv/distroless/static${distro_suffix}:debug "riscv64"
 done

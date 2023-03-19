@@ -13,4 +13,4 @@ fi
 
 echo "PROJECT_ID ${PROJECT_ID}"
 echo "COMMIT_SHA ${COMMIT_SHA:-no-commit-sha}"
-echo "REGISTRY ${REGISTRY:-gcr.io}"
+echo "REGISTRY ${REGISTRY:-ghcr.io/go-riscv/distroless}"

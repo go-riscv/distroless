@@ -17,7 +17,7 @@ STATIC_VARIANTS = [
 ]
 
 STATIC |= {
-    "{REGISTRY}/{PROJECT_ID}/static-" + distro + ":" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_" + distro
+    "ghcr.io/go-riscv/distroless/static-" + distro + ":" + tag_base + "-" + arch: "//base:" + label + "_" + user + "_" + arch + "_" + distro
     for arch in ARCHITECTURES
     for (tag_base, label, user) in STATIC_VARIANTS
     for distro in DISTROS
