@@ -8,6 +8,36 @@ on:
     branches: [ 'main' ]
 
 jobs:
+  images:
+    permissions: write-all
+    name: Build images
+    runs-on: ubuntu-20.04 # most compatible with debian 11
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Mount bazel caches
+        uses: actions/cache@v3
+        with:
+            path: |
+                ~/.cache/bazel
+                ~/.cache/bazel-repo
+            key: bazel-cache-images-${{ hashFiles('**/BUILD.bazel', '**/*.bzl', '**/*.yaml', 'WORKSPACE') }}-${{ github.sha }}
+            restore-keys: |
+                bazel-cache-images-
+                bazel-cache-
+      - name: Build images
+        run: bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc build //images/...
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build images
+        run: bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc run //:publish
+
   ci-images:
     name: CI for image tests
     runs-on: ubuntu-20.04 # most compatible with debian 11
