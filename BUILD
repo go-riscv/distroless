@@ -24,6 +24,7 @@ STATIC |= {
 }
 
 ALL = {}
+
 ALL |= STATIC
 
 container_bundle(

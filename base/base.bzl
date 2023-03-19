@@ -49,4 +49,3 @@ def distro_components(distro):
                 user = "%d" % uid,
                 workdir = workdir,
             )
-
