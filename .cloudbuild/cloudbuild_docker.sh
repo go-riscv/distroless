@@ -25,9 +25,7 @@ docker_manifest() {
   docker manifest push $_image
 }
 
-for distro_suffix in "" -unstable; do
+for distro_suffix in "-unstable"; do
   docker_manifest ghcr.io/go-riscv/distroless/static${distro_suffix}:nonroot "riscv64"
   docker_manifest ghcr.io/go-riscv/distroless/static${distro_suffix}:latest "riscv64"
-  docker_manifest ghcr.io/go-riscv/distroless/static${distro_suffix}:debug-nonroot "riscv64"
-  docker_manifest ghcr.io/go-riscv/distroless/static${distro_suffix}:debug "riscv64"
 done
