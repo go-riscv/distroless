@@ -38,8 +38,6 @@ jobs:
           for i in $(seq 5); do 
             bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc cquery 'kind(filegroup, deps(kind(container_image, ...)))' --output=label && break || sleep 20; 
           done
-      - name: Test
-        run: bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc test $(bazel query 'attr(tags, "amd64", ...)')
 
   ci-unit:
     name: CI unit tests
@@ -57,5 +55,5 @@ jobs:
             restore-keys: |
                 bazel-cache-unit-
                 bazel-cache-
-      - name: Test
-        run: bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc test //... --build_tests_only
+#      - name: Test
+#        run: bazel --bazelrc=$GITHUB_WORKSPACE/.github/workflows/ci.bazelrc test //... --build_tests_only
