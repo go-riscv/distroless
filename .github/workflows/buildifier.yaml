@@ -3,9 +3,11 @@ name: Buildifier
 on:
   pull_request:
     branches: [ 'main' ]
+  workflow_dispatch: # Allow manual runs.
+  push:
+    branches: [ 'main' ]
 
 jobs:
-
   autoformat:
     name: Auto-format and Check
     runs-on: ubuntu-latest
