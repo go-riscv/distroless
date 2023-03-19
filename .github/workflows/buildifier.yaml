@@ -23,7 +23,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd $(mktemp -d)
-          GO111MODULE=on go get github.com/bazelbuild/buildtools/buildifier@3.2.0
+          GO111MODULE=on go install github.com/bazelbuild/buildtools/buildifier@3.2.0
 
       - name: Run buildifier
         shell: bash
