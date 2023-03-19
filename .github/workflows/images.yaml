@@ -1,4 +1,4 @@
-name: cd
+name: images
 
 on:
   workflow_dispatch: # Allow manual runs.
@@ -14,7 +14,7 @@ jobs:
       packages: write
       id-token: write # needed for signing the images with GitHub OIDC Token **not production ready**
 
-    name: Build images
+    name: publish
     runs-on: ubuntu-20.04 # most compatible with debian 11
 
     steps:

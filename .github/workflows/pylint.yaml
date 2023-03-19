@@ -1,11 +1,10 @@
-name: Pylint
+name: pylint
 
 on:
   pull_request:
     branches: [ 'main' ]
 
 jobs:
-
   autoformat:
     name: Auto-format and Check
     runs-on: ubuntu-latest

@@ -1,4 +1,4 @@
-name: package manager CI
+name: package-manager
 
 on:
   workflow_dispatch: # Allow manual runs.
@@ -9,7 +9,7 @@ on:
 
 jobs:
   build-and-test:
-    name: CI
+    name: ci
     runs-on: ubuntu-latest
 
     steps:
