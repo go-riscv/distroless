@@ -1,5 +1,6 @@
 name: update-snapshots
 on:
+  workflow_dispatch: # Allow manual runs.
   # will send emails to last editor of this cron syntax (distroless-bot)
   schedule:
     - cron:  '35 8 * * *'
@@ -12,12 +13,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-        
 
-    - name: Set up Go 1.16.x
+    - name: Set up Go 1.20.x
       uses: actions/setup-go@v4
       with:
-        go-version: 1.16.x
+        go-version: 1.20.x
       id: go
 
     - name: Run update script
@@ -28,7 +28,6 @@ jobs:
       with:
         token: ${{ secrets.ACTIONS_TOKEN }}
         commit-message: "Bumping packages to latest stable versions"
-        author: "Distroless Bot <distroless-bot@google.com>"
         title: "Bumping packages to latest stable versions"
         body: "Bumping packages to latest stable versions"
         branch: "update-snapshots"
