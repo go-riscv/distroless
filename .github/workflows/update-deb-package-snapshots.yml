@@ -35,7 +35,7 @@ jobs:
         author: GitHub <actions@github.com>
         committer: GitHub <actions@github.com>
         commit-message: 'feat: update packages'
-        branch: main
+        branch: feat/update-packages
         delete-branch: true
         token: ${{ steps.generate-token.outputs.token }}
         title: Update package snapshots
