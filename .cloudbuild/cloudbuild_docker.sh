@@ -24,18 +24,6 @@ docker_manifest() {
   docker manifest create $_image $_from_images
 }
 
-docker_push() {
-  _image=$1
-  _archs=$2
-  _from_images=""
-
-  for arch in $_archs; do
-    _from_images="$_from_images $_image-$arch"
-  done
-
-  docker manifest push $_image
-}
-
 cosign version
 
 docker_manifest ghcr.io/go-riscv/distroless/static-unstable:nonroot "riscv64"
@@ -47,5 +35,5 @@ cosign sign -y --key env://COSIGN_PRIVATE_KEY ghcr.io/go-riscv/distroless/static
 cosign sign -y ghcr.io/go-riscv/distroless/static-unstable:latest
 
 # push last to be latest in "packages" section
-docker_push ghcr.io/go-riscv/distroless/static-unstable:nonroot "riscv64"
-docker_push ghcr.io/go-riscv/distroless/static-unstable:latest "riscv64"
+docker manifest push ghcr.io/go-riscv/distroless/static-unstable:nonroot
+docker manifest push ghcr.io/go-riscv/distroless/static-unstable:latest
