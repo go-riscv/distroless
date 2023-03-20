@@ -45,3 +45,6 @@ jobs:
 
       - name: Publish manifests
         run: bash .cloudbuild/cloudbuild_docker.sh
+        env:
+          COSIGN_PRIVATE_KEY: ${{secrets.COSIGN_PRIVATE_KEY}}
+          COSIGN_PASSWORD: ${{secrets.COSIGN_PASSWORD}}
