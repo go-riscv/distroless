@@ -45,12 +45,3 @@ jobs:
 
       - name: Publish manifests
         run: bash .cloudbuild/cloudbuild_docker.sh
-
-      - name: Sign
-        run: bash .cloudbuild/cloudbuild_cosign.sh --key env://COSIGN_PRIVATE_KEY -y
-        env:
-          COSIGN_PRIVATE_KEY: ${{secrets.COSIGN_PRIVATE_KEY}}
-          COSIGN_PASSWORD: ${{secrets.COSIGN_PASSWORD}}
-
-      - name: Sign the images with GitHub OIDC Token **not production ready**
-        run: bash .cloudbuild/cloudbuild_cosign.sh -y

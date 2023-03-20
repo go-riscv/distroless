@@ -22,10 +22,30 @@ docker_manifest() {
   done
 
   docker manifest create $_image $_from_images
+}
+
+docker_push() {
+  _image=$1
+  _archs=$2
+  _from_images=""
+
+  for arch in $_archs; do
+    _from_images="$_from_images $_image-$arch"
+  done
+
   docker manifest push $_image
 }
 
-for distro_suffix in "-unstable"; do
-  docker_manifest ghcr.io/go-riscv/distroless/static${distro_suffix}:nonroot "riscv64"
-  docker_manifest ghcr.io/go-riscv/distroless/static${distro_suffix}:latest "riscv64"
-done
+cosign version
+
+docker_manifest ghcr.io/go-riscv/distroless/static-unstable:nonroot "riscv64"
+cosign sign --key env://COSIGN_PRIVATE_KEY -y ghcr.io/go-riscv/distroless/static-unstable:nonroot
+cosign sign -y ghcr.io/go-riscv/distroless/static-unstable:nonroot
+
+docker_manifest ghcr.io/go-riscv/distroless/static-unstable:latest "riscv64"
+cosign sign --key env://COSIGN_PRIVATE_KEY ghcr.io/go-riscv/distroless/static-unstable:latest
+cosign sign -y ghcr.io/go-riscv/distroless/static-unstable:latest
+
+# push last to be latest in "packages" section
+docker_push ghcr.io/go-riscv/distroless/static-unstable:nonroot "riscv64"
+docker_push ghcr.io/go-riscv/distroless/static-unstable:latest "riscv64"
