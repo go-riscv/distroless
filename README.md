@@ -16,3 +16,19 @@ docker pull ghcr.io/go-riscv/distroless/static-unstable:latest
 ```
 
 Images are build on every commit to main branch.
+
+### Building locally
+
+First, install bazel and python2.
+
+Then:
+```console
+$ bazel run //base:static_root_riscv64_unstable
+$ bazel run //base:static_nonroot_riscv64_unstable
+```
+
+```console
+$ docker images | grep bazel
+bazel/base      static_nonroot_riscv64_unstable   8052bacdb8ac   53 years ago   2.06MB
+bazel/base      static_root_riscv64_unstable      16bcf3ad365a   53 years ago   2.06MB
+```

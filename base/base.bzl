@@ -1,6 +1,5 @@
 # defines a function to replicate the container images for different distributions
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
-load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 load("//cacerts:cacerts.bzl", "cacerts")
 load("//:checksums.bzl", "ARCHITECTURES")
 
