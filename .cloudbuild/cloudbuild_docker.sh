@@ -39,11 +39,11 @@ docker_push() {
 cosign version
 
 docker_manifest ghcr.io/go-riscv/distroless/static-unstable:nonroot "riscv64"
-cosign sign --key env://COSIGN_PRIVATE_KEY -y ghcr.io/go-riscv/distroless/static-unstable:nonroot
+cosign sign -y --key env://COSIGN_PRIVATE_KEY -y ghcr.io/go-riscv/distroless/static-unstable:nonroot
 cosign sign -y ghcr.io/go-riscv/distroless/static-unstable:nonroot
 
 docker_manifest ghcr.io/go-riscv/distroless/static-unstable:latest "riscv64"
-cosign sign --key env://COSIGN_PRIVATE_KEY ghcr.io/go-riscv/distroless/static-unstable:latest
+cosign sign -y --key env://COSIGN_PRIVATE_KEY ghcr.io/go-riscv/distroless/static-unstable:latest
 cosign sign -y ghcr.io/go-riscv/distroless/static-unstable:latest
 
 # push last to be latest in "packages" section
