@@ -28,18 +28,6 @@ import (
 )
 
 func LatestSnapshot() (*config.Snapshots, error) {
-	snapshotURL := "https://snapshot.debian.org/archive/debian/?year=%d&month=%d"
-	s, err := latest(snapshotURL)
-	if err != nil {
-		return nil, errors.Wrap(err, "calculating latest snapshot")
-	}
-
-	securitySnapshotURL := "https://snapshot.debian.org/archive/debian-security/?year=%d&month=%d"
-	ss, err := latest(securitySnapshotURL)
-	if err != nil {
-		return nil, errors.Wrap(err, "calculating latest security snapshot")
-	}
-
 	portsSnapshotURL := "https://snapshot.debian.org/archive/debian-ports/?year=%d&month=%d"
 	sp, err := latest(portsSnapshotURL)
 	if err != nil {
@@ -47,9 +35,7 @@ func LatestSnapshot() (*config.Snapshots, error) {
 	}
 
 	return &config.Snapshots{
-		Debian:   s,
-		Security: ss,
-		Ports:    sp,
+		Ports: sp,
 	}, nil
 }
 
@@ -83,17 +69,6 @@ func latest(urltemplate string) (string, error) {
 	}
 }
 
-func Main(snapshot string, arch config.Arch, distro config.Distro) *PackageIndex {
-	return &PackageIndex{
-		URL:      fmt.Sprintf("https://snapshot.debian.org/archive/debian/%s/dists/%s/main/binary-%s/Packages.xz", snapshot, distro.Codename(), arch.DebianName()),
-		PoolRoot: fmt.Sprintf("https://snapshot.debian.org/archive/debian/%s/", snapshot),
-		Snapshot: snapshot,
-		Distro:   distro,
-		Arch:     arch,
-		Channel:  "main",
-	}
-}
-
 func Ports(snapshot string, arch config.Arch, distro config.Distro) *PackageIndex {
 	if snapshot == "" {
 		panic("ports snapshot must be specified")
@@ -105,31 +80,5 @@ func Ports(snapshot string, arch config.Arch, distro config.Distro) *PackageInde
 		Distro:   distro,
 		Arch:     arch,
 		Channel:  "main",
-	}
-}
-
-func Updates(snapshot string, arch config.Arch, distro config.Distro) *PackageIndex {
-	return &PackageIndex{
-		URL:      fmt.Sprintf("https://snapshot.debian.org/archive/debian/%s/dists/%s-updates/main/binary-%s/Packages.xz", snapshot, distro.Codename(), arch.DebianName()),
-		PoolRoot: fmt.Sprintf("https://snapshot.debian.org/archive/debian/%s/", snapshot),
-		Snapshot: snapshot,
-		Distro:   distro,
-		Arch:     arch,
-		Channel:  "updates",
-	}
-}
-
-func Security(snapshot string, arch config.Arch, distro config.Distro) *PackageIndex {
-	packageURL := fmt.Sprintf("https://snapshot.debian.org/archive/debian-security/%s/dists/%s-security/main/binary-%s/Packages.xz", snapshot, distro.Codename(), arch.DebianName())
-	if distro == config.DEBIAN10 { // the url changed after debian10
-		packageURL = fmt.Sprintf("https://snapshot.debian.org/archive/debian-security/%s/dists/%s/updates/main/binary-%s/Packages.xz", snapshot, distro.Codename(), arch.DebianName())
-	}
-	return &PackageIndex{
-		URL:      packageURL,
-		PoolRoot: fmt.Sprintf("https://snapshot.debian.org/archive/debian-security/%s/", snapshot),
-		Snapshot: snapshot,
-		Distro:   distro,
-		Arch:     arch,
-		Channel:  "security",
 	}
 }

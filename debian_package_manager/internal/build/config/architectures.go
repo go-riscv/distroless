@@ -22,28 +22,13 @@ import (
 type Arch int64
 
 const (
-	AMD64 Arch = iota
-	ARM64
-	ARM
-	PPC64LE
-	S390X
-	RISCV64
+	RISCV64 Arch = iota
 )
 
-var archs = []Arch{AMD64, ARM64, ARM, PPC64LE, S390X, RISCV64}
+var archs = []Arch{RISCV64}
 
 func (a Arch) String() string {
 	switch a {
-	case AMD64:
-		return "amd64"
-	case ARM64:
-		return "arm64"
-	case ARM:
-		return "arm"
-	case PPC64LE:
-		return "ppc64le"
-	case S390X:
-		return "s390x"
 	case RISCV64:
 		return "riscv64"
 	}
@@ -53,16 +38,6 @@ func (a Arch) String() string {
 // DebianName returns the debian specific name, which are slightly different than normal
 func (a Arch) DebianName() string {
 	switch a {
-	case AMD64:
-		return "amd64"
-	case ARM64:
-		return "arm64"
-	case ARM:
-		return "armhf"
-	case PPC64LE:
-		return "ppc64el"
-	case S390X:
-		return "s390x"
 	case RISCV64:
 		return "riscv64"
 	}

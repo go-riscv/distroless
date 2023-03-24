@@ -22,19 +22,13 @@ import (
 type Distro int64
 
 const (
-	DEBIAN10 Distro = iota
-	DEBIAN11
-	UNSTABLE
+	UNSTABLE Distro = iota
 )
 
-var distros = []Distro{DEBIAN10, DEBIAN11, UNSTABLE}
+var distros = []Distro{UNSTABLE}
 
 func (d Distro) String() string {
 	switch d {
-	case DEBIAN10:
-		return "debian10"
-	case DEBIAN11:
-		return "debian11"
 	case UNSTABLE:
 		return "unstable"
 	}
@@ -43,10 +37,6 @@ func (d Distro) String() string {
 
 func (d Distro) Version() int {
 	switch d {
-	case DEBIAN10:
-		return 10
-	case DEBIAN11:
-		return 11
 	case UNSTABLE:
 		return 0
 	}
@@ -55,10 +45,6 @@ func (d Distro) Version() int {
 
 func (d Distro) Codename() string {
 	switch d {
-	case DEBIAN10:
-		return "buster"
-	case DEBIAN11:
-		return "bullseye"
 	case UNSTABLE:
 		return "unstable"
 	}
