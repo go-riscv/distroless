@@ -8,7 +8,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "libc6": "2.37-3",
             "netbase": "6.4",
             "openssl": "3.0.9-1",
-            "tzdata": "2023c-6",
+            "tzdata": "2023c-7",
         },
     },
 }
