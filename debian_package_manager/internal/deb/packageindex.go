@@ -20,14 +20,17 @@ import (
 )
 
 func PackageIndexGroup(snapshots *config.Snapshots, arch config.Arch, distro config.Distro) []*PackageIndex {
-	// special casing for unstable ports
-	if snapshots.Ports == "" {
-		// No previous snapshot.
-		return []*PackageIndex{}
+	var pkgIndexes []*PackageIndex
+	if snapshots.Debian != "" {
+		pkgIndexes = append(pkgIndexes, Main(snapshots.Debian, arch, distro))
+		if distro != config.UNSTABLE {
+			pkgIndexes = append(pkgIndexes, Updates(snapshots.Debian, arch, distro))
+		}
 	}
-	return []*PackageIndex{
-		Ports(snapshots.Ports, arch, distro),
+	if snapshots.Security != "" && distro != config.UNSTABLE {
+		pkgIndexes = append(pkgIndexes, Security(snapshots.Security, arch, distro))
 	}
+	return pkgIndexes
 }
 
 type PackageIndex struct {

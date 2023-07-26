@@ -124,12 +124,13 @@ func checkForUpdates(current *config.Snapshots, latest *config.Snapshots, pkgDB 
 
 func writeConfig(snapshots *config.Snapshots, snapshotsFile string, pkgDB config.Packages, versionsFile string, archivesFile string) error {
 	genSnapshots := &config.Snapshots{
-		Ports: snapshots.Ports,
+		Debian:   snapshots.Debian,
+		Security: snapshots.Security,
 	}
 
 	allPackages := map[string]map[string]map[string]*deb.Package{}
 	errs, _ := errgroup.WithContext(context.Background())
-	fmt.Printf("Processing packages at ports (%v)... \n", snapshots.Ports)
+	fmt.Printf("Processing packages at debian(%v), security (%v)... \n", snapshots.Debian, snapshots.Security)
 	for arch, distropackages := range pkgDB {
 		allPackages[arch.String()] = map[string]map[string]*deb.Package{}
 		for distro, packages := range distropackages {

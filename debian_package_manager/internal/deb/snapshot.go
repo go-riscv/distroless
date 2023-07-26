@@ -28,14 +28,14 @@ import (
 )
 
 func LatestSnapshot() (*config.Snapshots, error) {
-	portsSnapshotURL := "https://snapshot.debian.org/archive/debian-ports/?year=%d&month=%d"
-	sp, err := latest(portsSnapshotURL)
+	mainURL := "https://snapshot.debian.org/archive/debian/?year=%d&month=%d"
+	sp, err := latest(mainURL)
 	if err != nil {
 		return nil, errors.Wrap(err, "calculating latest ports snapshot")
 	}
 
 	return &config.Snapshots{
-		Ports: sp,
+		Debian: sp,
 	}, nil
 }
 
@@ -69,16 +69,38 @@ func latest(urltemplate string) (string, error) {
 	}
 }
 
-func Ports(snapshot string, arch config.Arch, distro config.Distro) *PackageIndex {
+func Main(snapshot string, arch config.Arch, distro config.Distro) *PackageIndex {
 	if snapshot == "" {
 		panic("ports snapshot must be specified")
 	}
 	return &PackageIndex{
-		URL:      fmt.Sprintf("https://snapshot.debian.org/archive/debian-ports/%s/dists/%s/main/binary-%s/Packages.xz", snapshot, distro.Codename(), arch.DebianName()),
-		PoolRoot: fmt.Sprintf("https://snapshot.debian.org/archive/debian-ports/%s/", snapshot),
+		URL:      fmt.Sprintf("https://snapshot.debian.org/archive/debian/%s/dists/%s/main/binary-%s/Packages.xz", snapshot, distro.Codename(), arch.DebianName()),
+		PoolRoot: fmt.Sprintf("https://snapshot.debian.org/archive/debian/%s/", snapshot),
 		Snapshot: snapshot,
 		Distro:   distro,
 		Arch:     arch,
 		Channel:  "main",
+	}
+}
+
+func Updates(snapshot string, arch config.Arch, distro config.Distro) *PackageIndex {
+	return &PackageIndex{
+		URL:      fmt.Sprintf("https://snapshot.debian.org/archive/debian/%s/dists/%s-updates/main/binary-%s/Packages.xz", snapshot, distro.Codename(), arch.DebianName()),
+		PoolRoot: fmt.Sprintf("https://snapshot.debian.org/archive/debian/%s/", snapshot),
+		Snapshot: snapshot,
+		Distro:   distro,
+		Arch:     arch,
+		Channel:  "updates",
+	}
+}
+
+func Security(snapshot string, arch config.Arch, distro config.Distro) *PackageIndex {
+	return &PackageIndex{
+		URL:      fmt.Sprintf("https://snapshot.debian.org/archive/debian-security/%s/dists/%s-security/main/binary-%s/Packages.xz", snapshot, distro.Codename(), arch.DebianName()),
+		PoolRoot: fmt.Sprintf("https://snapshot.debian.org/archive/debian-security/%s/", snapshot),
+		Snapshot: snapshot,
+		Distro:   distro,
+		Arch:     arch,
+		Channel:  "security",
 	}
 }

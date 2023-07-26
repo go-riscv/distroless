@@ -22,7 +22,8 @@ import (
 )
 
 type Snapshots struct {
-	Ports string
+	Debian   string `yaml:"debian"`
+	Security string `yaml:"security,omitempty"`
 }
 
 func LoadSnapshots(path string) (*Snapshots, error) {
@@ -59,5 +60,5 @@ func SaveSnapshots(path string, snapshots *Snapshots) error {
 }
 
 func (s1 *Snapshots) Equivalent(s2 *Snapshots) bool {
-	return s1.Ports == s2.Ports
+	return s1.Debian == s2.Debian && s1.Security == s2.Security
 }
