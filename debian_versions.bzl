@@ -2,7 +2,7 @@
 DEBIAN_PACKAGE_VERSIONS = {
     "riscv64": {
         "unstable": {
-            "base-files": "13.3",
+            "base-files": "13.2",
             "ca-certificates": "20240203",
             "libc-bin": "2.38-13",
             "libc6": "2.38-13",

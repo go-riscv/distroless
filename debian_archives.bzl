@@ -4,9 +4,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
 def repositories():
     http_file(
         name = "riscv64_unstable_base-files",
-        downloaded_file_path = "base-files_13.3_riscv64.deb",
-        sha256 = "927390ff9a03c36119f5d736abf46a692769771373d7426032cebe9667776733",
-        urls = ["https://snapshot.debian.org/archive/debian/20240701T023644Z/pool/main/b/base-files/base-files_13.3_riscv64.deb"],
+        downloaded_file_path = "base-files_13.2_riscv64.deb",
+        sha256 = "8c5100c6bf24743c7863def820fd36d1ac692e4863672cef57dd6a1607376fff",
+        urls = ["https://snapshot.debian.org/archive/debian/20240512T204749Z/pool/main/b/base-files/base-files_13.2_riscv64.deb"],
     )
     http_file(
         name = "riscv64_unstable_ca-certificates",
