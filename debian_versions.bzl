@@ -7,7 +7,7 @@ DEBIAN_PACKAGE_VERSIONS = {
             "libc-bin": "2.40-6",
             "libc6": "2.40-6",
             "netbase": "6.4",
-            "openssl": "3.4.0-2",
+            "openssl": "3.4.1-1",
             "tzdata": "2025a-2",
         },
     },
