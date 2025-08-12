@@ -28,7 +28,7 @@ jobs:
       - name: Install Cosign
         uses: sigstore/cosign-installer@v3
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Mount bazel caches
         uses: actions/cache@v4
         with:
