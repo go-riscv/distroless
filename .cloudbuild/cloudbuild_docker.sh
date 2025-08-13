@@ -21,7 +21,7 @@ docker_manifest() {
     _from_images="$_from_images $_image-$arch"
   done
 
-  docker manifest create $_image $_from_images
+  docker manifest create --amend $_image $_from_images
 }
 
 cosign version
